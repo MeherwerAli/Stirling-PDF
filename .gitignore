@@ -190,10 +190,8 @@ env.bak/
 venv.bak/
 
 # Env files (secrets / local overrides). Subproject .gitignore files whitelist any committed defaults.
-.env*
 
 # VS Code
-/.vscode/**/*
 !/.vscode/settings.json
 !/.vscode/extensions.json
 
@@ -293,3 +291,7 @@ docs/type3/signatures/
 
 # Local screenshot artifacts from *-screenshots.spec.ts
 frontend/editor/screenshots/
+branch_structure.json
+temp_auto_push.bat
+temp_interactive_push.bat
+config.bat
