@@ -3,6 +3,11 @@
 // (Edge / Google Translate / extensions) from crashing the app via
 // parent-mismatch DOMExceptions. See the module for details.
 import "@app/utils/patchDomForTranslators";
+// WebKit lacks ReadableStream async iteration, which pdf.js needs to read text.
+// Must be installed before any PDF work starts.
+import "@app/utils/patchReadableStreamAsyncIterator";
+// WebKit also lacks requestIdleCallback, so callers need no per-site fallback.
+import "@app/utils/patchRequestIdleCallback";
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css";
 import "../vite-env.d.ts"; // oxlint-disable-line no-restricted-imports -- Outside app paths
@@ -21,13 +26,8 @@ import { startEagerWasmCompilation } from "@app/services/wasmPrecompiler";
 applyDevWorktreeLabel();
 
 if (typeof window !== "undefined") {
-  const scheduleCompilation = () => {
-    if (typeof requestIdleCallback === "function") {
-      requestIdleCallback(() => startEagerWasmCompilation(), { timeout: 2000 });
-    } else {
-      setTimeout(startEagerWasmCompilation, 1000);
-    }
-  };
+  const scheduleCompilation = () =>
+    requestIdleCallback(() => startEagerWasmCompilation(), { timeout: 2000 });
 
   if (document.readyState === "complete") {
     scheduleCompilation();

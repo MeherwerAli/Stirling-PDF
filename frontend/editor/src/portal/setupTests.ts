@@ -1,6 +1,10 @@
 import "@testing-library/jest-dom";
 import { vi } from "vitest";
 
+// The engine-capability shims `src/index.tsx` installs - see core/setupTests.ts.
+import "@app/utils/patchReadableStreamAsyncIterator";
+import "@app/utils/patchRequestIdleCallback";
+
 // Mirrors the editor's setup: jsdom lacks a handful of browser APIs that shared
 // components (Mantine FocusTrap, responsive helpers) touch on render.
 

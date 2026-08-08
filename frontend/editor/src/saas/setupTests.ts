@@ -2,6 +2,10 @@ import "@testing-library/jest-dom";
 import { vi } from "vitest";
 import { installFailOnConsole } from "@app/tests/failOnConsole";
 
+// The engine-capability shims `src/index.tsx` installs - see core/setupTests.ts.
+import "@app/utils/patchReadableStreamAsyncIterator";
+import "@app/utils/patchRequestIdleCallback";
+
 installFailOnConsole();
 
 // Mock localStorage for tests

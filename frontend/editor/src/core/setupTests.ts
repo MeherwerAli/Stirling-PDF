@@ -2,6 +2,11 @@ import "@testing-library/jest-dom";
 import { vi } from "vitest";
 import { installFailOnConsole } from "@app/tests/failOnConsole";
 
+// The engine-capability shims `src/index.tsx` installs. App code assumes these
+// globals exist, so jsdom (missing several, as WebKit is) has to agree.
+import "@app/utils/patchReadableStreamAsyncIterator";
+import "@app/utils/patchRequestIdleCallback";
+
 installFailOnConsole();
 
 // Mock localStorage for tests
